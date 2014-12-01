@@ -47,7 +47,7 @@ public class UserDAO {
 		
 		User user1 = new User("username1","pass","John","Doe","johndoe@hotmail.com","someurl","just my simple bio" );
 		User user2 = new User("username10", "pass2","Josh","Joshson", "josh@thatguy.com", "imgur.com/stuff", "just some stuf");
-				dao.CreateUser(user2);
+				//dao.CreateUser(user2);
 	
 	}
 
