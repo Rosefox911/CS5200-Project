@@ -41,6 +41,20 @@ public class LikeDAO {
 		}
 	}
 
+	public void unLike(String username, String sku) {
+		
+		try {
+			em.getTransaction().begin();
+			Query query = em.createQuery("DELETE l FROM Like l WHERE l.username=:username AND l.sku=:sku");
+			query.setParameter("username", username);
+			query.setParameter("sku", sku);
+			em.getTransaction().commit();
+		}
+		catch (IllegalArgumentException e) {
+			System.out.println("System trying to delete an invalid like!");
+		}
+	}
+	
 	public static void main(String[] args) {
 		
 		LikeDAO dao = new LikeDAO();
