@@ -18,6 +18,12 @@ function alertName() {
 
 <div class="container">
 
+<%
+   String sAction = (String) request.getAttribute("blowup");
+   if ( sAction != null && (sAction).equals("y")) { %>
+   <script> alert("kaboom");</script>
+<% } %>
+
 	<h1>Login</h1>
 	<form action="/Project-CS5200/loginAction" method="post">
 		Username:

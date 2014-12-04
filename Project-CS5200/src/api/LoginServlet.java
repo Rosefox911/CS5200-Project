@@ -29,11 +29,15 @@ public class LoginServlet extends HttpServlet {
 		if(result == false)
 		{
 			PrintWriter writer = response.getWriter();
+			/*
 			String htmlRespone = "<html>";
 			htmlRespone += "<h2>Incorrect Username/Password combination!</h2>";
 			htmlRespone += "</html>";
-			 
+			
 			writer.println(htmlRespone);
+			*/
+			
+			request.setAttribute("blowup", "y");
 		//	response.sendRedirect("/Project-CS5200/login.jsp");
 
 		}
