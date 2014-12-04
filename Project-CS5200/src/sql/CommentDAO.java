@@ -13,8 +13,16 @@ public class CommentDAO {
 
 	EntityManagerFactory factory = Persistence.createEntityManagerFactory("Project");
 	EntityManager em = null;
+	static CommentDAO instance = null;
 	
-	public CommentDAO() {
+	public static CommentDAO getInstance() {
+		if(instance == null) {
+			instance = new CommentDAO();
+		}
+		return instance;
+	}
+	
+	private CommentDAO() {
 		em = factory.createEntityManager();
 	}
 	

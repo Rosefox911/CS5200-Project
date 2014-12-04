@@ -14,7 +14,16 @@ public class LikeDAO {
 	EntityManagerFactory factory = Persistence.createEntityManagerFactory("Project");
 	EntityManager em = null;
 	
-	public LikeDAO() {
+	static LikeDAO instance = null;
+	
+	public static LikeDAO getInstance() {
+		if(instance == null) {
+			instance = new LikeDAO();
+		}
+		return instance;
+	}
+	
+	private LikeDAO() {
 		em = factory.createEntityManager();
 	}
 	
@@ -41,6 +50,20 @@ public class LikeDAO {
 		}
 	}
 
+	public void unLike(String username, String sku) {
+		
+		try {
+			em.getTransaction().begin();
+			Query query = em.createQuery("DELETE l FROM Like l WHERE l.username=:username AND l.sku=:sku");
+			query.setParameter("username", username);
+			query.setParameter("sku", sku);
+			em.getTransaction().commit();
+		}
+		catch (IllegalArgumentException e) {
+			System.out.println("System trying to delete an invalid like!");
+		}
+	}
+	
 	public static void main(String[] args) {
 		
 		LikeDAO dao = new LikeDAO();

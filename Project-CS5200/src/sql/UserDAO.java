@@ -28,7 +28,6 @@ public class UserDAO {
 		em.persist(user);
 		em.getTransaction().commit();
 	}
-	//sss
 	
 	public User findUser(String username) {
 		em.getTransaction().begin();
