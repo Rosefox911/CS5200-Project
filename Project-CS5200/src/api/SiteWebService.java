@@ -20,8 +20,7 @@ public class SiteWebService {
 	FollowDAO followdao = FollowDAO.getInstance();
 	LikeDAO likedao = LikeDAO.getInstance();
 	UserDAO userdao = UserDAO.getInstance();
-	//sduhiuih
-	
+	//uh	
 	
 	@GET
 	@Produces("application/json")
