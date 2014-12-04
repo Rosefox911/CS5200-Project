@@ -42,6 +42,22 @@ public class UserDAO {
 		}
 	}
 	
+	public Boolean findUserByUsernamePassword(String username, String password) {
+		
+		try {
+			User user = em.find(User.class, username);
+			if (user.getPassword().equals(password)) {
+				return true;
+			}
+			return false;
+		}
+		catch (IllegalArgumentException e) {
+			System.out.println("Invalid username");
+		}
+		
+		return false;
+	}
+	
 	public void deleteUser(String username) {
 		
 		try {
