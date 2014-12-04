@@ -1,6 +1,7 @@
 package api;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 
 import sql.*;
 
@@ -21,15 +22,20 @@ public class LoginServlet extends HttpServlet {
 		String username = request.getParameter("username");
 		String password = request.getParameter("password");
 		
-		System.out.println("Hello from Login Servlet " + username + " "  + password);
-		
 		UserDAO dao = UserDAO.getInstance();
 		
 		Boolean result = dao.findUserByUsernamePassword(username, password);
 		
 		if(result == false)
 		{
-			response.sendRedirect("/Project-CS5200/login.jsp");
+			PrintWriter writer = response.getWriter();
+			String htmlRespone = "<html>";
+			htmlRespone += "<h2>Incorrect Username/Password combination!</h2>";
+			htmlRespone += "</html>";
+			 
+			writer.println(htmlRespone);
+		//	response.sendRedirect("/Project-CS5200/login.jsp");
+
 		}
 		else {
 		//	request.setAttribute("user", user);

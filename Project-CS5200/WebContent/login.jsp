@@ -9,6 +9,13 @@
 </head>
 <body>
 
+<script type="text/javascript">
+function alertName() {
+	alert("Username/Password combination is incorrect!")
+}
+
+</script>
+
 <div class="container">
 
 	<h1>Login</h1>
@@ -22,6 +29,5 @@
 		<button class="btn btn-primary btn-block">Login</button>
 	</form>	
 </div>
-
 </body>
 </html>
