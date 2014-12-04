@@ -51,7 +51,7 @@ public class UserDAO {
 			}
 			return false; 
 		}
-		catch (IllegalArgumentException e) {
+		catch (Exception e) {
 			System.out.println("Invalid username");
 		}
 		
