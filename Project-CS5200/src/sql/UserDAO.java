@@ -49,7 +49,7 @@ public class UserDAO {
 			if (user.getPassword().equals(password)) {
 				return true;
 			}
-			return false;
+			return false; 
 		}
 		catch (IllegalArgumentException e) {
 			System.out.println("Invalid username");
