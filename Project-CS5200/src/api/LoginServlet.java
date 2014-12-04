@@ -25,17 +25,17 @@ public class LoginServlet extends HttpServlet {
 		
 		UserDAO dao = UserDAO.getInstance();
 		
-		User user = dao.selectByUsernameAndPassword(username, password);
+		Boolean result = dao.findUserByUsernamePassword(username, password);
 		
-		if(user == null)
+		if(result == false)
 		{
-			response.sendRedirect("/WeatherApp/login.jsp");
+			response.sendRedirect("/Project-CS5200/login.jsp");
 		}
-		else
-		{
-			request.setAttribute("user", user);
-			RequestDispatcher dispatcher = request.getRequestDispatcher("/listMyWeatherLocations.jsp");
-			dispatcher.forward(request, response);
+		else {
+		//	request.setAttribute("user", user);
+		//	RequestDispatcher dispatcher = request.getRequestDispatcher("/listMyWeatherLocations.jsp");
+		//	dispatcher.forward(request, response);
+			response.sendRedirect("/Project-CS5200/success.jsp");
 //			response.sendRedirect("/WeatherApp/listMyWeatherLocations.jsp");
 		}
 	}
