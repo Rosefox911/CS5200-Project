@@ -42,13 +42,29 @@ public class UserDAO {
 		}
 	}
 	
+	public void deleteUser(String username) {
+		
+		try {
+			User user = em.find(User.class, username);		
+			em.getTransaction().begin();
+			em.remove(user);
+			em.getTransaction().commit();
+		}
+		catch (IllegalArgumentException e) {
+			System.out.println("System trying to delete an invalid user!");
+		}
+	}
+	
 	public static void main(String[] args) {
+		
+		System.out.println("aaa");
+		
 		UserDAO dao = new UserDAO();
 		
 		User user1 = new User("username1","pass","John","Doe","johndoe@hotmail.com","someurl","just my simple bio" );
 		User user2 = new User("username10", "pass2","Josh","Joshson", "josh@thatguy.com", "imgur.com/stuff", "just some stuf");
-				//dao.CreateUser(user2);
-	
+		//dao.CreateUser(user2);
+		dao.deleteUser("haha");
 	}
 
 }
