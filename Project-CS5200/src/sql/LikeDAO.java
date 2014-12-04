@@ -14,7 +14,16 @@ public class LikeDAO {
 	EntityManagerFactory factory = Persistence.createEntityManagerFactory("Project");
 	EntityManager em = null;
 	
-	public LikeDAO() {
+	static LikeDAO instance = null;
+	
+	public static LikeDAO getInstance() {
+		if(instance == null) {
+			instance = new LikeDAO();
+		}
+		return instance;
+	}
+	
+	private LikeDAO() {
 		em = factory.createEntityManager();
 	}
 	

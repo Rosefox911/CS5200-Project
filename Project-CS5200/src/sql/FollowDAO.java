@@ -14,7 +14,16 @@ public class FollowDAO {
 	EntityManagerFactory factory = Persistence.createEntityManagerFactory("Project");
 	EntityManager em = null;
 	
-	public FollowDAO() {
+	static FollowDAO instance = null;
+	
+	public static FollowDAO getInstance() {
+		if(instance == null) {
+			instance = new FollowDAO();
+		}
+		return instance;
+	}
+	
+	private FollowDAO() {
 		em = factory.createEntityManager();
 	}
 	
