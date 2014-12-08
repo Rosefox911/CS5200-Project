@@ -13,9 +13,7 @@ public class Product {
 	private String ListingStatus;
 	private String TimeLeft;
 	private String Title;
-	private Double ShippingCostSummaryValue;
 	private String ShippingType;
-	private Double ListedShippingServiceCostValue;
 	public String getItemID() {
 		return ItemID;
 	}
@@ -88,31 +86,17 @@ public class Product {
 	public void setTitle(String title) {
 		Title = title;
 	}
-	public Double getShippingCostSummaryValue() {
-		return ShippingCostSummaryValue;
-	}
-	public void setShippingCostSummaryValue(Double shippingCostSummaryValue) {
-		ShippingCostSummaryValue = shippingCostSummaryValue;
-	}
 	public String getShippingType() {
 		return ShippingType;
 	}
 	public void setShippingType(String shippingType) {
 		ShippingType = shippingType;
 	}
-	public Double getListedShippingServiceCostValue() {
-		return ListedShippingServiceCostValue;
-	}
-	public void setListedShippingServiceCostValue(
-			Double listedShippingServiceCostValue) {
-		ListedShippingServiceCostValue = listedShippingServiceCostValue;
-	}
 	public Product(String itemID, String endTime, String itemURL,
 			String listingType, String galleryURL, String primaryCategoryID,
 			String primaryCategoryName, Long bidCount,
 			Double convertedCurrentPrice, String listingStatus,
-			String timeLeft, String title, Double shippingCostSummaryValue,
-			String shippingType, Double listedShippingServiceCostValue) {
+			String timeLeft, String title, String shippingType) {
 		super();
 		ItemID = itemID;
 		EndTime = endTime;
@@ -126,9 +110,7 @@ public class Product {
 		ListingStatus = listingStatus;
 		TimeLeft = timeLeft;
 		Title = title;
-		ShippingCostSummaryValue = shippingCostSummaryValue;
 		ShippingType = shippingType;
-		ListedShippingServiceCostValue = listedShippingServiceCostValue;
 	}
 	public Product() {
 		super();

@@ -29,7 +29,7 @@ public class EbayJsonWebServiceClient {
 	public List<Product> getProductsforKeyword(String keyword) {
 		keyword = keyword.replace(" ", "+");
 		String CompleteAPIURL = APIURL.replace("{{KEYWORD}}", keyword);
-		System.out.println(CompleteAPIURL);
+		//System.out.println(CompleteAPIURL);
 		
 		List<Product> products = new ArrayList<Product>();
 		
@@ -76,15 +76,9 @@ public class EbayJsonWebServiceClient {
 					JSONObject ShippingCostSummaryList = (JSONObject) FirstItem.get("ShippingCostSummary");
 					JSONObject ShippingServiceCostList = (JSONObject) ShippingCostSummaryList.get("ShippingServiceCost");
 					
-					
-					Double ShippingCostSummaryValue = (Double) ShippingServiceCostList.get("Value");
 					String ShippingType = ShippingCostSummaryList.get("ShippingType").toString();
-					
-					JSONObject ListedShippingServiceCostList = (JSONObject) ShippingCostSummaryList.get("ListedShippingServiceCost");
-					
-					Double ListedShippingServiceCostValue = (Double) ListedShippingServiceCostList.get("Value");
 							
-					Product product = new Product(ItemID, EndTime,ItemURL,ListingType, GalleryURL,PrimaryCategoryID, PrimaryCategoryName, BidCount, ConvertedCurrentPrice, ListingStatus, TimeLeft, Title, ShippingCostSummaryValue, ShippingType, ListedShippingServiceCostValue);
+					Product product = new Product(ItemID, EndTime,ItemURL,ListingType, GalleryURL,PrimaryCategoryID, PrimaryCategoryName, BidCount, ConvertedCurrentPrice, ListingStatus, TimeLeft, Title, ShippingType);
 					products.add(product);
 				
 				}
