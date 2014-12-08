@@ -1,4 +1,4 @@
-package sql;
+package classes;
 
 import java.io.Serializable;
 

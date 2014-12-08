@@ -1,4 +1,4 @@
-package sql;
+package classes;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
