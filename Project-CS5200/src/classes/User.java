@@ -8,11 +8,11 @@ import java.util.List;
 
 
 /**
- * The persistent class for the Users database table.
+ * The persistent class for the users database table.
  * 
  */
 @Entity
-@Table(name="Users")
+@Table(name="users")
 @NamedQuery(name="User.findAll", query="SELECT u FROM User u")
 public class User implements Serializable {
 	private static final long serialVersionUID = 1L;
@@ -207,5 +207,6 @@ public class User implements Serializable {
 		this.lastname = lastname;
 		this.password = password;
 	}
+	
 
 }

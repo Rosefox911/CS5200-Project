@@ -28,10 +28,10 @@ public class FollowDAO {
 	}
 	
 	public void CreateFollow (Follow follow) {	
-		if (UserDAO.getInstance().findUser(follow.getUserfollowed()) == null) {
+		if (UserDAO.getInstance().findUser(follow.getId().getUserfollowed()) == null) {
 			System.out.println("The user you are trying to follow does not exist!");	
 		}
-		else if (follow.getUserfollowed().equals(follow.getUserfollowing())) {
+		else if (follow.getId().getUserfollowed().equals(follow.getId().getUserfollowing())) {
 			System.out.println("User cannot follow himself!");
 		}
 		else {
@@ -81,16 +81,18 @@ public class FollowDAO {
 
 	public static void main(String[] args) {
 		FollowDAO dao = new FollowDAO();
-		
+		UserDAO userDao = UserDAO.getInstance();
+		User user1 = userDao.findUser("username1");
+		User user2 = userDao.findUser("username10");
 
-		Follow follow1 = new Follow("username1","username10",new java.sql.Timestamp(System.currentTimeMillis()));
+		Follow follow1 = new Follow(new FollowPK("username1","username10"),
+				new java.sql.Timestamp(System.currentTimeMillis()), user1, user2);
 		//dao.CreateFollow(follow1);
 		List<Follow> listOfResult = dao.RecentFollows("username1");
 		for (Follow f : listOfResult) {
-			System.out.println(f.getUserfollowed());
+			System.out.println(f.getId().getUserfollowed());
 			System.out.println(f.getDatefollowed());
 		}
 		dao.unFollow("username1", "username10");
 	}
-
 }

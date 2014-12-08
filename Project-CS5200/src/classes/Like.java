@@ -6,11 +6,11 @@ import java.sql.Timestamp;
 
 
 /**
- * The persistent class for the Likes database table.
+ * The persistent class for the likes database table.
  * 
  */
 @Entity
-@Table(name="Likes")
+@Table(name="likes")
 @NamedQuery(name="Like.findAll", query="SELECT l FROM Like l")
 public class Like implements Serializable {
 	private static final long serialVersionUID = 1L;
@@ -53,8 +53,9 @@ public class Like implements Serializable {
 		this.user = user;
 	}
 
-	public Like(Timestamp dateliked, User user) {
+	public Like(LikePK id, Timestamp dateliked, User user) {
 		super();
+		this.id = id;
 		this.dateliked = dateliked;
 		this.user = user;
 	}

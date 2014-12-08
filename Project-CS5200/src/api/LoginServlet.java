@@ -3,7 +3,7 @@ package api;
 import java.io.IOException;
 import java.io.PrintWriter;
 
-import sql.*;
+import classes.*;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;

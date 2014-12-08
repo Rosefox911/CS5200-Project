@@ -67,12 +67,14 @@ public class LikeDAO {
 	public static void main(String[] args) {
 		
 		LikeDAO dao = new LikeDAO();
+		UserDAO userDao = UserDAO.getInstance();
 		
-		Like like1 = new Like("username1","ljhlkuh",new java.sql.Timestamp(System.currentTimeMillis()));
+		Like like1 = new Like(new LikePK("username1","ljhlkuh"), 
+				new java.sql.Timestamp(System.currentTimeMillis()), userDao.findUser("username1"));
 
 		List<Like> listOfResult = dao.RecentLikes("username1");
 		for (Like l : listOfResult) {
-			System.out.println(l.getSku());
+			System.out.println(l.getId().getSku());
 			System.out.println(l.getDateliked());
 		}
 

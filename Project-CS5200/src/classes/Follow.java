@@ -6,11 +6,11 @@ import java.sql.Timestamp;
 
 
 /**
- * The persistent class for the Follows database table.
+ * The persistent class for the follows database table.
  * 
  */
 @Entity
-@Table(name="Follows")
+@Table(name="follows")
 @NamedQuery(name="Follow.findAll", query="SELECT f FROM Follow f")
 public class Follow implements Serializable {
 	private static final long serialVersionUID = 1L;
@@ -31,7 +31,6 @@ public class Follow implements Serializable {
 	private User user2;
 
 	public Follow() {
-		super();
 	}
 
 	public FollowPK getId() {
@@ -66,10 +65,12 @@ public class Follow implements Serializable {
 		this.user2 = user2;
 	}
 
-	public Follow(Timestamp datefollowed, User user1, User user2) {
+	public Follow(FollowPK id, Timestamp datefollowed, User user1, User user2) {
 		super();
+		this.id = id;
 		this.datefollowed = datefollowed;
 		this.user1 = user1;
 		this.user2 = user2;
 	}
+
 }

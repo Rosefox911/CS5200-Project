@@ -1,10 +1,11 @@
 package classes;
 
 import java.io.Serializable;
+
 import javax.persistence.*;
 
 /**
- * The primary key class for the Follows database table.
+ * The primary key class for the follows database table.
  * 
  */
 @Embeddable
@@ -53,5 +54,10 @@ public class FollowPK implements Serializable {
 		hash = hash * prime + this.userfollowed.hashCode();
 		
 		return hash;
+	}
+	public FollowPK(String userfollowing, String userfollowed) {
+		super();
+		this.userfollowing = userfollowing;
+		this.userfollowed = userfollowed;
 	}
 }

@@ -52,8 +52,9 @@ public class CommentDAO {
 
 	public static void main(String[] args) {
 		CommentDAO dao = new CommentDAO();
+		UserDAO userDao = UserDAO.getInstance();
 	
-		Comment comment1 = new Comment("username1","123456",new java.sql.Timestamp(System.currentTimeMillis()), "Test comment");
+		Comment comment1 = new Comment(userDao.findUser("username1"),"123456",new java.sql.Timestamp(System.currentTimeMillis()), "Test comment");
 		dao.CreateComment(comment1);
 		List<Comment> listOfResult = dao.RecentComments("username1");
 		for (Comment c : listOfResult) {

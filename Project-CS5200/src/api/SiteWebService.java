@@ -16,7 +16,7 @@ import classes.FollowDAO;
 import classes.LikeDAO;
 import classes.User;
 import classes.UserDAO;
-import sql.*;
+import classes.*;
 
 // api/site
 @Path("/site")

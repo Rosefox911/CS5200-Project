@@ -8,11 +8,11 @@ import java.sql.Timestamp;
 
 
 /**
- * The persistent class for the Comments database table.
+ * The persistent class for the comments database table.
  * 
  */
 @Entity
-@Table(name="Comments")
+@Table(name="comments")
 @NamedQuery(name="Comment.findAll", query="SELECT c FROM Comment c")
 public class Comment implements Serializable {
 	private static final long serialVersionUID = 1L;
@@ -76,11 +76,13 @@ public class Comment implements Serializable {
 		this.user = user;
 	}
 
-	public Comment(String content, Timestamp date, String sku, User user) {
+	public Comment(User user, String sku, Timestamp date, String content) {
 		super();
-		this.content = content;
-		this.date = date;
-		this.sku = sku;
 		this.user = user;
+		this.sku = sku;
+		this.date = date;
+		this.content = content;
 	}
+	
+	
 }

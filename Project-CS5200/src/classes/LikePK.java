@@ -1,10 +1,11 @@
 package classes;
 
 import java.io.Serializable;
+
 import javax.persistence.*;
 
 /**
- * The primary key class for the Likes database table.
+ * The primary key class for the likes database table.
  * 
  */
 @Embeddable
@@ -52,5 +53,10 @@ public class LikePK implements Serializable {
 		hash = hash * prime + this.sku.hashCode();
 		
 		return hash;
+	}
+	public LikePK(String username, String sku) {
+		super();
+		this.username = username;
+		this.sku = sku;
 	}
 }
