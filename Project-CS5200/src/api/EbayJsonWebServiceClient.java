@@ -22,10 +22,6 @@ import org.json.simple.parser.ParseException;
 public class EbayJsonWebServiceClient {
 	private String APIURL = "http://open.api.ebay.com/shopping?appid=JorgeDel-89b1-4723-8ee2-8812f73e42fe&version=517&siteid=0&callname=FindItems&QueryKeywords={{KEYWORD}}&responseencoding=JSON&MaxEntries=10";
 	
-	
-
-	
-	
 	public List<Product> getProductsforKeyword(String keyword) {
 		keyword = keyword.replace(" ", "+");
 		String CompleteAPIURL = APIURL.replace("{{KEYWORD}}", keyword);
