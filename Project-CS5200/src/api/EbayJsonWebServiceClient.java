@@ -10,6 +10,9 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
@@ -17,11 +20,18 @@ import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 
 public class EbayJsonWebServiceClient {
-	private String APIURL = "http://open.api.ebay.com/shopping?appid=JorgeDel-89b1-4723-8ee2-8812f73e42fe&version=517&siteid=0&callname=FindItems&QueryKeywords={{KEYWORD}}&responseencoding=JSON";
+	private String APIURL = "http://open.api.ebay.com/shopping?appid=JorgeDel-89b1-4723-8ee2-8812f73e42fe&version=517&siteid=0&callname=FindItems&QueryKeywords={{KEYWORD}}&responseencoding=JSON&MaxEntries=10";
 	
-	public Product getProductforKeyword(String keyword, Integer i) {
+	
+
+	
+	
+	public List<Product> getProductsforKeyword(String keyword) {
+		keyword = keyword.replace(" ", "+");
 		String CompleteAPIURL = APIURL.replace("{{KEYWORD}}", keyword);
 		System.out.println(CompleteAPIURL);
+		
+		List<Product> products = new ArrayList<Product>();
 		
 		try {
 			URL url = new URL(CompleteAPIURL);
@@ -41,45 +51,48 @@ public class EbayJsonWebServiceClient {
 			
 				JSONObject root = (JSONObject) parser.parse(json);
 				JSONArray ItemArray = (JSONArray) root.get("Item");
-				JSONObject FirstItem = (JSONObject) ItemArray.get(i);
-			
-				String ItemID = FirstItem.get("ItemID").toString();
-				String EndTime = FirstItem.get("EndTime").toString();
-				String ItemURL = FirstItem.get("ViewItemURLForNaturalSearch").toString();
-				String ListingType = FirstItem.get("ListingType").toString();
-				String GalleryURL = FirstItem.get("GalleryURL").toString();
-				String PrimaryCategoryID = FirstItem.get("PrimaryCategoryID").toString();
-				String PrimaryCategoryName = FirstItem.get("PrimaryCategoryName").toString();
-				Long BidCount = (Long) FirstItem.get("BidCount");
 				
-				JSONObject ConvertedCurrentPriceList = (JSONObject) FirstItem.get("ConvertedCurrentPrice");
+				Integer length = ItemArray.size();
 				
+				for (int i = 0; i < length; i++ ) {
+					JSONObject FirstItem = (JSONObject) ItemArray.get(i);
+					String ItemID = FirstItem.get("ItemID").toString();
+					String EndTime = FirstItem.get("EndTime").toString();
+					String ItemURL = FirstItem.get("ViewItemURLForNaturalSearch").toString();
+					String ListingType = FirstItem.get("ListingType").toString();
+					String GalleryURL = FirstItem.get("GalleryURL").toString();
+					String PrimaryCategoryID = FirstItem.get("PrimaryCategoryID").toString();
+					String PrimaryCategoryName = FirstItem.get("PrimaryCategoryName").toString();
+					Long BidCount = (Long) FirstItem.get("BidCount");
+					
+					JSONObject ConvertedCurrentPriceList = (JSONObject) FirstItem.get("ConvertedCurrentPrice");
+					
+					
+					Double ConvertedCurrentPrice = (Double) ConvertedCurrentPriceList.get("Value");
+					String ListingStatus = FirstItem.get("ListingStatus").toString();
+					String TimeLeft = FirstItem.get("TimeLeft").toString();
+					String Title = FirstItem.get("Title").toString();
+					
+					JSONObject ShippingCostSummaryList = (JSONObject) FirstItem.get("ShippingCostSummary");
+					JSONObject ShippingServiceCostList = (JSONObject) ShippingCostSummaryList.get("ShippingServiceCost");
+					
+					
+					Double ShippingCostSummaryValue = (Double) ShippingServiceCostList.get("Value");
+					String ShippingType = ShippingCostSummaryList.get("ShippingType").toString();
+					
+					JSONObject ListedShippingServiceCostList = (JSONObject) ShippingCostSummaryList.get("ListedShippingServiceCost");
+					
+					Double ListedShippingServiceCostValue = (Double) ListedShippingServiceCostList.get("Value");
+							
+					Product product = new Product(ItemID, EndTime,ItemURL,ListingType, GalleryURL,PrimaryCategoryID, PrimaryCategoryName, BidCount, ConvertedCurrentPrice, ListingStatus, TimeLeft, Title, ShippingCostSummaryValue, ShippingType, ListedShippingServiceCostValue);
+					products.add(product);
 				
-				Double ConvertedCurrentPrice = (Double) ConvertedCurrentPriceList.get("Value");
-				String ListingStatus = FirstItem.get("ListingStatus").toString();
-				String TimeLeft = FirstItem.get("TimeLeft").toString();
-				String Title = FirstItem.get("Title").toString();
-				
-				JSONObject ShippingCostSummaryList = (JSONObject) FirstItem.get("ShippingCostSummary");
-				JSONObject ShippingServiceCostList = (JSONObject) ShippingCostSummaryList.get("ShippingServiceCost");
-				
-				
-				Double ShippingCostSummaryValue = (Double) ShippingServiceCostList.get("Value");
-				String ShippingType = ShippingCostSummaryList.get("ShippingType").toString();
-				
-				JSONObject ListedShippingServiceCostList = (JSONObject) ShippingCostSummaryList.get("ListedShippingServiceCost");
-				
-				Double ListedShippingServiceCostValue = (Double) ListedShippingServiceCostList.get("Value");
-						
-						
-				Product product = new Product(ItemID, EndTime,ItemURL,ListingType, GalleryURL,PrimaryCategoryID, PrimaryCategoryName, BidCount, ConvertedCurrentPrice, ListingStatus, TimeLeft, Title, ShippingCostSummaryValue, ShippingType, ListedShippingServiceCostValue);
-				
-				return product;
+				}
+				return products;
 				
 			} catch (ParseException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
-				
 			} catch(NullPointerException e) {
 				e.printStackTrace();
 			}
@@ -98,12 +111,14 @@ public class EbayJsonWebServiceClient {
 	public static void main(String[] args) {
 		EbayJsonWebServiceClient test1 = new EbayJsonWebServiceClient();
 		
-		Product product = new Product();
+		List<Product> products = null;
 		
-		product = test1.getProductforKeyword("sfnfhm", 0);
+		products = test1.getProductsforKeyword("keyboard usb");
 		
+		for (Product p : products) {
+			System.out.println(p.getItemID());
+		}	
 		
-		System.out.print(product.getItemID());
 
 	}
 
