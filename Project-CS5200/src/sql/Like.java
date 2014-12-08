@@ -1,45 +1,42 @@
 package sql;
 
 import java.io.Serializable;
-import java.lang.String;
+import javax.persistence.*;
 import java.sql.Timestamp;
 
-import javax.persistence.*;
 
 /**
- * Entity implementation class for Entity: Likes
- *
+ * The persistent class for the Likes database table.
+ * 
  */
 @Entity
 @Table(name="Likes")
-@IdClass(LikesPK.class)
+@NamedQuery(name="Like.findAll", query="SELECT l FROM Like l")
 public class Like implements Serializable {
-
-	   
-	@Id
-	private String username;   
-	@Id
-	private String sku;
-	private Timestamp dateliked;
 	private static final long serialVersionUID = 1L;
+
+	@EmbeddedId
+	private LikePK id;
+
+	private Timestamp dateliked;
+
+	//bi-directional many-to-one association to User
+	@ManyToOne
+	@JoinColumn(name="username")
+	private User user;
 
 	public Like() {
 		super();
-	}   
-	public String getUsername() {
-		return this.username;
 	}
 
-	public void setUsername(String username) {
-		this.username = username;
-	}   
-	public String getSku() {
-		return this.sku;
+	public LikePK getId() {
+		return this.id;
 	}
 
-	public void setSku(String sku) {
-		this.sku = sku;
-	}   
+	public void setId(LikePK id) {
+		this.id = id;
+	}
+
 	public Timestamp getDateliked() {
 		return this.dateliked;
 	}
@@ -47,10 +44,19 @@ public class Like implements Serializable {
 	public void setDateliked(Timestamp dateliked) {
 		this.dateliked = dateliked;
 	}
-	public Like(String username, String sku, Timestamp dateliked) {
+
+	public User getUser() {
+		return this.user;
+	}
+
+	public void setUser(User user) {
+		this.user = user;
+	}
+
+	public Like(Timestamp dateliked, User user) {
 		super();
-		this.username = username;
-		this.sku = sku;
 		this.dateliked = dateliked;
-	} 
+		this.user = user;
+	}
+
 }

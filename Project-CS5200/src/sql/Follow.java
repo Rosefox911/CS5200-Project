@@ -1,55 +1,75 @@
 package sql;
 
 import java.io.Serializable;
-import java.lang.String;
+import javax.persistence.*;
 import java.sql.Timestamp;
 
-import javax.persistence.*;
 
 /**
- * Entity implementation class for Entity: Follows
- *
+ * The persistent class for the Follows database table.
+ * 
  */
 @Entity
 @Table(name="Follows")
-@IdClass(FollowsPK.class)
+@NamedQuery(name="Follow.findAll", query="SELECT f FROM Follow f")
 public class Follow implements Serializable {
-
-	   
-	@Id
-	private String userfollowing;   
-	@Id
-	private String userfollowed;
-	private Timestamp datefollowed;
 	private static final long serialVersionUID = 1L;
-	
-	
-	public String getUserfollowing() {
-		return userfollowing;
-	}
-	public void setUserfollowing(String userfollowing) {
-		this.userfollowing = userfollowing;
-	}
-	public String getUserfollowed() {
-		return userfollowed;
-	}
-	public void setUserfollowed(String userfollowed) {
-		this.userfollowed = userfollowed;
-	}
-	public Timestamp getDatefollowed() {
-		return datefollowed;
-	}
-	public void setDatefollowed(Timestamp datefollowed) {
-		this.datefollowed = datefollowed;
-	}
+
+	@EmbeddedId
+	private FollowPK id;
+
+	private Timestamp datefollowed;
+
+	//bi-directional many-to-one association to User
+	@ManyToOne
+	@JoinColumn(name="userfollowing")
+	private User user1;
+
+	//bi-directional many-to-one association to User
+	@ManyToOne
+	@JoinColumn(name="userfollowed")
+	private User user2;
+
 	public Follow() {
 		super();
 	}
-	public Follow(String userfollowing, String userfollowed,
-			Timestamp datefollowed) {
-		super();
-		this.userfollowing = userfollowing;
-		this.userfollowed = userfollowed;
+
+	public FollowPK getId() {
+		return this.id;
+	}
+
+	public void setId(FollowPK id) {
+		this.id = id;
+	}
+
+	public Timestamp getDatefollowed() {
+		return this.datefollowed;
+	}
+
+	public void setDatefollowed(Timestamp datefollowed) {
 		this.datefollowed = datefollowed;
+	}
+
+	public User getUser1() {
+		return this.user1;
+	}
+
+	public void setUser1(User user1) {
+		this.user1 = user1;
+	}
+
+	public User getUser2() {
+		return this.user2;
+	}
+
+	public void setUser2(User user2) {
+		this.user2 = user2;
+	}
+
+	public Follow(Timestamp datefollowed, User user1, User user2) {
+		super();
+		this.datefollowed = datefollowed;
+		this.user1 = user1;
+		this.user2 = user2;
 	}
 }

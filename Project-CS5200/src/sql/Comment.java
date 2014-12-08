@@ -1,66 +1,49 @@
 package sql;
 
 import java.io.Serializable;
-import java.lang.Integer;
-import java.lang.String;
-import java.sql.Timestamp;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
+
+import java.sql.Timestamp;
 
 
 /**
- * Entity implementation class for Entity: Comments
- *
+ * The persistent class for the Comments database table.
+ * 
  */
 @Entity
 @Table(name="Comments")
+@NamedQuery(name="Comment.findAll", query="SELECT c FROM Comment c")
 public class Comment implements Serializable {
+	private static final long serialVersionUID = 1L;
 
-	   
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	private Integer commentid;
-	private String commenter;
-	private String sku;
-	private Timestamp date;
+	private int commentid;
+
 	private String content;
-	private static final long serialVersionUID = 1L;
+
+	private Timestamp date;
+
+	private String sku;
+
+	//bi-directional many-to-one association to User
+	@ManyToOne
+	@JoinColumn(name="commenter")
+	private User user;
 
 	public Comment() {
 		super();
-	}   
-	public Integer getCommentid() {
+	}
+
+	public int getCommentid() {
 		return this.commentid;
 	}
 
-	public void setCommentid(Integer commentid) {
+	public void setCommentid(int commentid) {
 		this.commentid = commentid;
-	}   
-	public String getCommenter() {
-		return this.commenter;
 	}
 
-	public void setCommenter(String commenter) {
-		this.commenter = commenter;
-	}   
-	public String getSku() {
-		return this.sku;
-	}
-
-	public void setSku(String sku) {
-		this.sku = sku;
-	}   
-	public Timestamp getDate() {
-		return this.date;
-	}
-
-	public void setDate(Timestamp date) {
-		this.date = date;
-	}   
 	public String getContent() {
 		return this.content;
 	}
@@ -68,12 +51,36 @@ public class Comment implements Serializable {
 	public void setContent(String content) {
 		this.content = content;
 	}
-	public Comment(String commenter, String sku, Timestamp date, String content) {
-		super();
-		this.commenter = commenter;
-		this.sku = sku;
-		this.date = date;
-		this.content = content;
+
+	public Timestamp getDate() {
+		return this.date;
 	}
-	
+
+	public void setDate(Timestamp date) {
+		this.date = date;
+	}
+
+	public String getSku() {
+		return this.sku;
+	}
+
+	public void setSku(String sku) {
+		this.sku = sku;
+	}
+
+	public User getUser() {
+		return this.user;
+	}
+
+	public void setUser(User user) {
+		this.user = user;
+	}
+
+	public Comment(String content, Timestamp date, String sku, User user) {
+		super();
+		this.content = content;
+		this.date = date;
+		this.sku = sku;
+		this.user = user;
+	}
 }
