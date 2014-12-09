@@ -27,20 +27,20 @@ if(keyword != null && keyword.length() > 1) {
 			<td>Category</td>
 			<td>Price</td>
 			<td>Time Left</td>
+			<td>Like Product</td>
 	<%
-	for(Product p: products) {
-		%>
-		
-		<tr>
-			<td><img src=<%= p.getGalleryURL() %>></td>
-			<td><%= p.getTitle() %></td>
-			<td><%= p.getPrimaryCategoryName() %></td>
-			<td><%= p.getConvertedCurrentPrice() %></td>
-			<td><%= p.getTimeLeft() %></td>
-		</tr>
-		
-		<%
-	}
+		for(Product p: products) {
+			%>
+			<tr name=<%= p.getItemID() %>>
+				<td><img src=<%= p.getGalleryURL() %>></td>
+				<td><%= p.getTitle() %></td>
+				<td><%= p.getPrimaryCategoryName() %></td>
+				<td>$<%= p.getConvertedCurrentPrice() %></td>
+				<td><%= p.getTimeLeft() %></td>
+				<td></td>
+			</tr>
+			<%
+		}
 }
 %>
 </table>
