@@ -73,15 +73,31 @@ public class UserDAO {
 		}
 	}
 	
+	public String getAvatarFromUsername(String username) {
+		em.getTransaction().begin();
+		Query query = em.createQuery("SELECT u FROM User u WHERE u.username=:username");
+		query.setParameter("username", username);
+		try {
+			User user = (User) query.getSingleResult();
+			String avatar = user.getAvatar();
+			return avatar;
+		}
+		catch (NoResultException e){
+			return null;
+		} finally {
+			em.getTransaction().commit();
+		}
+	}
+	
 	public static void main(String[] args) {
 		
 		UserDAO dao = UserDAO.getInstance();
 		
-		User user1 = new User("username1","pass","John","Doe","johndoe@hotmail.com","someurl","just my simple bio" );
+		User user1 = new User("jorged", "http://i.imgur.com/ALSP7jW.jpg", "jorge's bio, sup", "jorge@hotmail.com", "Jorge", "Delgado", "pass");
 		User user2 = new User("username2", "pass2","Josh","Joshson", "josh@thatguy.com", "imgur.com/stuff", "just some stuf");
-		//dao.createUser(user2);
-		System.out.println(dao.findUser("username211"));
-		dao.deleteUser("haha");
+		dao.createUser(user1);
+		//System.out.println(dao.findUser("username211"));
+		//dao.deleteUser("haha");
 	}
 
 }

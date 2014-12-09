@@ -3,7 +3,7 @@
   <display-name>Project-CS5200</display-name>
   <welcome-file-list>
     <welcome-file>login.html</welcome-file>
-    <welcome-file>success.jsp</welcome-file>
+    <welcome-file>homepage.jsp</welcome-file>
   </welcome-file-list>
   
    <servlet>
