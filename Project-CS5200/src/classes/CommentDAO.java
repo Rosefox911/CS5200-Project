@@ -26,14 +26,19 @@ public class CommentDAO {
 		em = factory.createEntityManager();
 	}
 	
-	public void CreateComment (Comment comment) {	
+	public void createComment (String username, String sku, String content) {	
+		
+		UserDAO userDao = UserDAO.getInstance();
+		Comment comment = new Comment(userDao.findUser(username), sku,
+				new java.sql.Timestamp(System.currentTimeMillis()), content);
+		
 		em.getTransaction().begin();
 		em.persist(comment);
 		em.getTransaction().commit();
 	}
 	
 	@SuppressWarnings("unchecked")
-	public List<Comment> RecentComments(String username) {
+	public List<Comment> recentComments(String username) {
 		List<Comment> comments = new ArrayList<Comment>();
 		
 		Integer limiter = 5;
@@ -52,11 +57,9 @@ public class CommentDAO {
 
 	public static void main(String[] args) {
 		CommentDAO dao = new CommentDAO();
-		UserDAO userDao = UserDAO.getInstance();
 	
-		Comment comment1 = new Comment(userDao.findUser("username1"),"123456",new java.sql.Timestamp(System.currentTimeMillis()), "Test comment");
-		dao.CreateComment(comment1);
-		List<Comment> listOfResult = dao.RecentComments("username1");
+		dao.createComment("username1", "123456", "test content");
+		List<Comment> listOfResult = dao.recentComments("username1");
 		for (Comment c : listOfResult) {
 			System.out.println(c.getSku());
 			System.out.println(c.getContent());

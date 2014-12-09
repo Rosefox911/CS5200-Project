@@ -27,19 +27,37 @@ public class LikeDAO {
 		em = factory.createEntityManager();
 	}
 	
-	public void CreateLike (Like like) {	
+	public void createLike (String username, String sku) {
+		
+		UserDAO userDao = UserDAO.getInstance();
+		Like like = new Like(new LikePK(username,sku), 
+				new java.sql.Timestamp(System.currentTimeMillis()), userDao.findUser(username));
+		
 		em.getTransaction().begin();
 		em.persist(like);
 		em.getTransaction().commit();
 	}
 	
-	public List<Like> RecentLikes(String username) {
+	@SuppressWarnings("finally")
+	public boolean userLiked(String username, String sku) {
+		Like like = null;
+		try {
+			LikePK pk = new LikePK(username, sku);
+			like = em.find(Like.class, pk);
+		} catch (Exception e) {
+			System.out.println("user liked checker failed");
+		} finally {
+			return like == null;
+		}
+	}
+	
+	public List<Like> recentLikes(String username) {
 		List<Like> likes = new ArrayList<Like>();
 		
 		Integer limiter = 5;
 		
 		em.getTransaction().begin();
-		Query query = em.createQuery("SELECT l FROM Like l WHERE l.username=:username ORDER BY l.dateliked DESC").setMaxResults(limiter);
+		Query query = em.createQuery("SELECT l FROM Like l WHERE l.id.username=:username ORDER BY l.dateliked DESC").setMaxResults(limiter);
 		query.setParameter("username", username);
 		try {
 			likes = query.getResultList();
@@ -47,6 +65,8 @@ public class LikeDAO {
 		}
 		catch (NoResultException e){
 			return null;
+		} finally {
+			em.getTransaction().commit();
 		}
 	}
 
@@ -54,7 +74,7 @@ public class LikeDAO {
 		
 		try {
 			em.getTransaction().begin();
-			Query query = em.createQuery("DELETE l FROM Like l WHERE l.username=:username AND l.sku=:sku");
+			Query query = em.createQuery("DELETE l FROM Like l WHERE l.id.username =:username And l.id.sku:=sku");
 			query.setParameter("username", username);
 			query.setParameter("sku", sku);
 			em.getTransaction().commit();
@@ -67,12 +87,10 @@ public class LikeDAO {
 	public static void main(String[] args) {
 		
 		LikeDAO dao = new LikeDAO();
-		UserDAO userDao = UserDAO.getInstance();
 		
-		Like like1 = new Like(new LikePK("username1","ljhlkuh"), 
-				new java.sql.Timestamp(System.currentTimeMillis()), userDao.findUser("username1"));
+		dao.createLike("username1", "abc");
 
-		List<Like> listOfResult = dao.RecentLikes("username1");
+		List<Like> listOfResult = dao.recentLikes("username1");
 		for (Like l : listOfResult) {
 			System.out.println(l.getId().getSku());
 			System.out.println(l.getDateliked());

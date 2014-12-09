@@ -27,7 +27,15 @@ public class FollowDAO {
 		em = factory.createEntityManager();
 	}
 	
-	public void CreateFollow (Follow follow) {	
+	public void createFollow (String username1, String username2) {	
+
+		UserDAO userDao = UserDAO.getInstance();
+		User user1 = userDao.findUser(username1);
+		User user2 = userDao.findUser(username2);
+
+		Follow follow = new Follow(new FollowPK(username1, username2),
+				new java.sql.Timestamp(System.currentTimeMillis()), user1, user2);
+		
 		if (UserDAO.getInstance().findUser(follow.getId().getUserfollowed()) == null) {
 			System.out.println("The user you are trying to follow does not exist!");	
 		}
@@ -47,13 +55,13 @@ public class FollowDAO {
 	}
 	
 	@SuppressWarnings("unchecked")
-	public List<Follow> RecentFollows(String username) {
+	public List<Follow> recentFollows(String username) {
 		List<Follow> follows = new ArrayList<Follow>();
 		
 		Integer limiter = 5;
 		
 		em.getTransaction().begin();
-		Query query = em.createQuery("SELECT f FROM Follow f WHERE f.userfollowing=:username ORDER BY f.datefollowed DESC").setMaxResults(limiter);
+		Query query = em.createQuery("SELECT f FROM Follow f WHERE f.id.userfollowing=:username ORDER BY f.datefollowed DESC").setMaxResults(limiter);
 		query.setParameter("username", username);
 		em.getTransaction().commit();
 		try {
@@ -69,7 +77,7 @@ public class FollowDAO {
 		
 		try {
 			em.getTransaction().begin();
-			Query query = em.createQuery("DELETE f FROM Follow f WHERE f.userfollowing=:username AND f.userfollowed=:followedUsername");
+			Query query = em.createQuery("DELETE f FROM Follow f WHERE f.id.userfollowing=:username AND f.id.userfollowed=:followedUsername");
 			query.setParameter("username", curUsername);
 			query.setParameter("followedUsername", followedUsername);
 			em.getTransaction().commit();
@@ -88,7 +96,7 @@ public class FollowDAO {
 		Follow follow1 = new Follow(new FollowPK("username1","username10"),
 				new java.sql.Timestamp(System.currentTimeMillis()), user1, user2);
 		//dao.CreateFollow(follow1);
-		List<Follow> listOfResult = dao.RecentFollows("username1");
+		List<Follow> listOfResult = dao.recentFollows("username1");
 		for (Follow f : listOfResult) {
 			System.out.println(f.getId().getUserfollowed());
 			System.out.println(f.getDatefollowed());

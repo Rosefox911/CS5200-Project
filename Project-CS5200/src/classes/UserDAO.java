@@ -23,7 +23,7 @@ public class UserDAO {
 		em = factory.createEntityManager();
 	}
 	
-	public void CreateUser (User user) {
+	public void createUser (User user) {
 		em.getTransaction().begin();
 		em.persist(user);
 		em.getTransaction().commit();
@@ -34,11 +34,13 @@ public class UserDAO {
 		Query query = em.createQuery("SELECT u FROM User u WHERE u.username=:username");
 		query.setParameter("username", username);
 		try {
-		User user = (User) query.getSingleResult();
-		return user;
+			User user = (User) query.getSingleResult();
+			return user;
 		}
 		catch (NoResultException e){
 			return null;
+		} finally {
+			em.getTransaction().commit();
 		}
 	}
 	
@@ -73,13 +75,12 @@ public class UserDAO {
 	
 	public static void main(String[] args) {
 		
-		System.out.println("aaa");
-		
-		UserDAO dao = new UserDAO();
+		UserDAO dao = UserDAO.getInstance();
 		
 		User user1 = new User("username1","pass","John","Doe","johndoe@hotmail.com","someurl","just my simple bio" );
-		User user2 = new User("username10", "pass2","Josh","Joshson", "josh@thatguy.com", "imgur.com/stuff", "just some stuf");
-		//dao.CreateUser(user2);
+		User user2 = new User("username2", "pass2","Josh","Joshson", "josh@thatguy.com", "imgur.com/stuff", "just some stuf");
+		//dao.createUser(user2);
+		System.out.println(dao.findUser("username211"));
 		dao.deleteUser("haha");
 	}
 
