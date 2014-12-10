@@ -25,7 +25,32 @@ xmlhttp.onreadystatechange=function()
     document.getElementById("myDiv").innerHTML=xmlhttp.responseText;
     }
   }
+document.getElementById("likebutton").value  = "unlike";
 xmlhttp.open("GET","processLike.jsp?id=" + itemid,true);
+xmlhttp.send();
+}
+</script>
+<script>
+function captureUnLike(itemid)
+{
+var xmlhttp;
+if (window.XMLHttpRequest)
+  {// code for IE7+, Firefox, Chrome, Opera, Safari
+  xmlhttp=new XMLHttpRequest();
+  }
+else
+  {// code for IE6, IE5
+  xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
+  }
+xmlhttp.onreadystatechange=function()
+  {
+  if (xmlhttp.readyState==4 && xmlhttp.status==200)
+    {
+    document.getElementById("myDiv").innerHTML=xmlhttp.responseText;
+    }
+  }
+document.getElementById("unlikebutton").value  = "like";
+xmlhttp.open("GET","processunLike.jsp?id=" + itemid,true);
 xmlhttp.send();
 }
 </script>
@@ -55,20 +80,59 @@ xmlhttp.send();
 			<td>Time Left</td>
 			<td>Like Product</td>
 		</tr>
+		
 		<%
-			for (Product p : products) {
-		%>
-		<tr>
-			<td><a href="ProductDetails.jsp?id=<%= p.getItemID()%>"><img src=<%=p.getGalleryURL()%>></a></td>
-			<td><%=p.getTitle()%></td>
-			<td><%=p.getPrimaryCategoryName()%></td>
-			<td>$<%=p.getConvertedCurrentPrice()%></td>
-			<td><%=p.getTimeLeft()%></td>
-			<td><input type="button" name = "like" value = "like" onclick="captureLike(<%= p.getItemID() %>)"></td>
-		</tr>
-		<%
-			}
-			}
+       		UserDAO dao = UserDAO.getInstance();
+        	User user = new User();
+            String userName = null;
+            Cookie[] cookies = request.getCookies();
+            if (cookies != null) {
+                for (Cookie cookie : cookies) {
+                    if (cookie.getName().equals("User")) {
+                        userName = cookie.getValue();
+                    	user = dao.findUser(userName);
+                    	break;
+                    }
+                }
+            }
+            if (userName == null) {
+                response.sendRedirect("login.html");
+            }
+            else {
+            	
+				LikeDAO likeDao = LikeDAO.getInstance();
+				System.out.println(products);
+				if (products != null) {
+					for (Product p : products) {
+						
+						if (likeDao.userLiked(userName, p.getItemID()) == null) {
+							%>
+							<tr>
+								<td><img src=<%=p.getGalleryURL()%>></td>
+								<td><%=p.getTitle()%></td>
+								<td><%=p.getPrimaryCategoryName()%></td>
+								<td>$<%=p.getConvertedCurrentPrice()%></td>
+								<td><%=p.getTimeLeft()%></td>
+								<td><input id = "likebutton" type="button" name = "like" value = "like" onclick="captureLike(<%= p.getItemID() %>)"></td>
+							</tr>
+							<%
+						}
+						else {
+							%>
+							<tr>
+								<td><img src=<%=p.getGalleryURL()%>></td>
+								<td><%=p.getTitle()%></td>
+								<td><%=p.getPrimaryCategoryName()%></td>
+								<td>$<%=p.getConvertedCurrentPrice()%></td>
+								<td><%=p.getTimeLeft()%></td>
+								<td><input id = "unlikebutton" type="button" name = "like" value = "unlike" onclick="captureUnLike(<%= p.getItemID() %>)"></td>
+							</tr>
+							<%
+						}
+					}
+				}
+        	}
+		}
 			
 		%>
 	</table>
