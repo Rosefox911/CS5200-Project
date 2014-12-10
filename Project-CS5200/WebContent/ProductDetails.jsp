@@ -75,9 +75,10 @@ Double ConvertedCurrentPrice = (Double) ConvertedCurrentPriceList.get("Value");
 <input type="button" name = "like" value = "like" onclick="captureLike(<%= ItemID %>)">
 
 
-		<div class="recentfollows">
+		<div class="recentcomments">
 		<h1>Recent Comments</h1>
 		<% CommentDAO c = CommentDAO.getInstance();
+		System.out.println(ItemID);
 		List<Comment> recentComments = c.recentCommentsForProduct(ItemID);
 		%>
 		
@@ -88,7 +89,9 @@ Double ConvertedCurrentPrice = (Double) ConvertedCurrentPriceList.get("Value");
 		<tr>
 		<td><%=comment.getUser().getFirstname() %> Commented <%= comment.getContent()%></td>
 		</tr>
-		<%} %>
+		</br>
+		</br>
+		<%}%>
 		</div>
 </body>
 </html>
