@@ -38,7 +38,6 @@ public class SearchUserServlet extends HttpServlet {
         if (dao.findUser(targetUser) != null) {
             ServletContext sc = getServletContext();
             RequestDispatcher rd = sc.getRequestDispatcher("searchUser.jsp");
-            System.out.println("aaa");
             request.setAttribute("targetUser", request.getParameter("targetUser"));
             rd.forward(request, response);
         } else {

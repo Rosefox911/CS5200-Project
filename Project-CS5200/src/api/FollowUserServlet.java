@@ -35,7 +35,7 @@ public class FollowUserServlet extends HttpServlet {
     	
         // get request parameters for userID and password
         String targetUser = request.getParameter("hidden");
-        targetUser = targetUser.replace("/", "");
+        System.out.println(targetUser);
         String userName = null;
         User curUser = null;
         Cookie[] cookies = request.getCookies();
@@ -67,10 +67,9 @@ public class FollowUserServlet extends HttpServlet {
         if (followDAO.findFollow(userName, targetUser) != null) {
         	
         	followDAO.unFollow(userName, targetUser);
-            ServletContext sc = getServletContext();
-            RequestDispatcher rd = sc.getRequestDispatcher("/homepage.jsp");
+            RequestDispatcher rd = getServletContext().getRequestDispatcher("/homepage.jsp");
             PrintWriter out = response.getWriter();
-            out.println("<font color=blue>User unFollowed success.</font>\n");
+            out.println("<font color=red>User unFollowed.</font>\n");
             rd.forward(request, response);
         } else {
         	

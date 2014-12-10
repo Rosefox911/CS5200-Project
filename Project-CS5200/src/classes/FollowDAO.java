@@ -82,9 +82,9 @@ public class FollowDAO {
 		
 		try {
 			em.getTransaction().begin();
-			Query query = em.createQuery("DELETE f FROM Follow f WHERE f.id.userfollowing=:username AND f.id.userfollowed=:followedUsername");
-			query.setParameter("username", curUsername);
-			query.setParameter("followedUsername", followedUsername);
+			FollowPK pk = new FollowPK(curUsername, followedUsername);
+			Follow follow = em.find(Follow.class, pk);
+			em.remove(follow);
 			em.getTransaction().commit();
 		}
 		catch (IllegalArgumentException e) {
@@ -97,7 +97,9 @@ public class FollowDAO {
 		UserDAO userDao = UserDAO.getInstance();
 		User user1 = userDao.findUser("username1");
 		User user2 = userDao.findUser("username10");
-
+		User user3 = userDao.findUser("username2");
+		
+		dao.createFollow("username1", "username2");
 		Follow follow1 = new Follow(new FollowPK("username1","username10"),
 				new java.sql.Timestamp(System.currentTimeMillis()), user1, user2);
 		//dao.CreateFollow(follow1);
