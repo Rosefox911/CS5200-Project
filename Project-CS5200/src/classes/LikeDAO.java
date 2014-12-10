@@ -38,17 +38,15 @@ public class LikeDAO {
 		em.getTransaction().commit();
 	}
 	
-	@SuppressWarnings("finally")
-	public boolean userLiked(String username, String sku) {
+	public Like userLiked(String username, String sku) {
 		Like like = null;
 		try {
 			LikePK pk = new LikePK(username, sku);
 			like = em.find(Like.class, pk);
 		} catch (Exception e) {
 			System.out.println("user liked checker failed");
-		} finally {
-			return like == null;
-		}
+		} 
+		return like;
 	}
 	
 	public List<Like> recentLikes(String username) {
@@ -74,13 +72,13 @@ public class LikeDAO {
 		
 		try {
 			em.getTransaction().begin();
-			Query query = em.createQuery("DELETE l FROM Like l WHERE l.id.username =:username And l.id.sku:=sku");
-			query.setParameter("username", username);
-			query.setParameter("sku", sku);
-			em.getTransaction().commit();
+			Like like = em.find(Like.class, new LikePK(username, sku));
+			em.remove(like);
 		}
 		catch (IllegalArgumentException e) {
 			System.out.println("System trying to delete an invalid like!");
+		} finally {
+			em.getTransaction().commit();
 		}
 	}
 	
@@ -88,14 +86,15 @@ public class LikeDAO {
 		
 		LikeDAO dao = new LikeDAO();
 		
-		dao.createLike("username1", "abc");
+		//dao.createLike("username1", "abc");
 
 		List<Like> listOfResult = dao.recentLikes("username1");
 		for (Like l : listOfResult) {
 			System.out.println(l.getId().getSku());
 			System.out.println(l.getDateliked());
 		}
-
+		System.out.println(dao.userLiked("username1", "afsafdsadf"));
+		
 	}
 	
 }
