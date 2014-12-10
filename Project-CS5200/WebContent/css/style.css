@@ -1,0 +1,15 @@
+.container {
+	width: 100%;
+
+.avatar {
+	float: left;
+}
+
+.queries {
+	float: right;
+	
+}
+
+body {
+    background-image: url('http://crunchify.com/bg.png');
+}

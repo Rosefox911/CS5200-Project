@@ -3,18 +3,9 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
+<link rel="stylesheet" type="text/css" href="css/style.css">
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
-<title>Login Successful</title>
-<style type="text/css">
-body {
-    background-image: url('http://crunchify.com/bg.png');
-}
-</style>
-</head>
- 
-<body>
-    <div class="container">
-        <%
+  <%
        		UserDAO dao = UserDAO.getInstance();
         	User user = new User();
             String userName = null;
@@ -31,16 +22,28 @@ body {
             if (userName == null)
                 response.sendRedirect("login.html");
         %>
+<title><%= user.getFirstname()%> <%= user.getLastname() %>'s Homepage</title>
+</head>
+ 
+<body>
+    <div class="container">
         <div class="avatar">
 	        <img src=<%= user.getAvatar()%>>
 	        <p> Name</p> <%= user.getFirstname()%> <%= user.getLastname() %>
 	        <p>Biography: </p> <%= user.getBio() %>
 	        <p></p>
         </div>
-        <div style = "position:fixed; top: 20px; right: 90px; width: 100px; height: 200ps" id="container">
+        
+        
+        <div class="queries">
         <form action="./searchUser.jsp" method="post">
-            <br> <br> Search others by Username: <input type="text" name="targetUser">
-            <br> <br> <input type="submit" value="search">
+            <br> <br> Search Username: <input type="text" name="targetUser">
+            <br> <br> <input type="submit" value="Seach Usernames">
+        </form>
+        
+    		<form action="./QueryResults.jsp" method="post" target="_blank">
+            <br> <br> Search Products: <input type="text" name="keyword">
+            <br> <br> <input type="Submit" name ="btn" value="Search Products">
         </form>
     </div>
         
