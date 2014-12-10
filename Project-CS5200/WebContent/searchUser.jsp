@@ -39,18 +39,17 @@ body {
             if (f == null) {
             	%> 
             	<form method="post" action="FollowUserServlet" name="inputpage">
-            	<input name="hidden" type="hidden" value=<%=targetUser%>/>
+            	<input name="hidden" type="hidden" value=<%=targetUser%>>
             	<INPUT TYPE="submit" Value="Follow" NAME="submit" title="follow">
             	<%
             } else {
             	%> 
             	<form method="post" action="FollowUserServlet" name="inputpage">
-            	<input name="hidden" type="hidden" value=<%=targetUser%>/>
+            	<input name="hidden" type="hidden" value=<%=targetUser%>>
             	<INPUT TYPE="submit" Value="unFollow" NAME="submit" title="unFollow">
             	<%
             }
             %>
-        %>
         <div class="avatar">
 	        <img src=<%= target.getAvatar()%>>
 	        <p> Name </p> <%= target.getFirstname()%> <%= target.getLastname() %>
