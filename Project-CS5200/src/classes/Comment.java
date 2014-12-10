@@ -26,6 +26,8 @@ public class Comment implements Serializable {
 	private Timestamp date;
 
 	private String sku;
+	
+	private String title;
 
 	//bi-directional many-to-one association to User
 	@ManyToOne
@@ -75,14 +77,24 @@ public class Comment implements Serializable {
 	public void setUser(User user) {
 		this.user = user;
 	}
+	
+	public String getTitle() {
+		return title;
+	}
 
-	public Comment(User user, String sku, Timestamp date, String content) {
+	public void setTitle(String title) {
+		this.title = title;
+	}
+
+	public Comment(User user, String sku, Timestamp date, String content, String title) {
 		super();
 		this.user = user;
 		this.sku = sku;
 		this.date = date;
 		this.content = content;
+		this.title = title;
 	}
+
 	
 	
 }

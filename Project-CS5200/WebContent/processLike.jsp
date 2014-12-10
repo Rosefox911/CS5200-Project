@@ -24,7 +24,7 @@ if (cookies != null) {
     }
 }
 LikeDAO likeDao = LikeDAO.getInstance();
-System.out.println("hahaha");
+//System.out.println("hahaha");
 if (likeDao.userLiked(userName, id) == null) {
 	likeDao.createLike(userName, id); // create a new like
 } else {

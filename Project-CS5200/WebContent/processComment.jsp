@@ -10,6 +10,9 @@
 <body>
 <%String id = request.getParameter("id");
 String comment = request.getParameter("comment");
+String title = request.getParameter("title");
+
+System.out.println(title);
 
 UserDAO dao = UserDAO.getInstance();
 User curUser = new User();
@@ -24,7 +27,10 @@ if (cookies != null) {
         }
     }
 }
-CommentDAO.getInstance().createComment(userName, id, comment);
+CommentDAO commentdao = CommentDAO.getInstance();
+String username = curUser.getUsername();
+
+commentdao.createComment(username, id, comment, title);
 %>
 
 

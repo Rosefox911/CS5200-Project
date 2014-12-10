@@ -38,3 +38,4 @@ content VARCHAR(400)
 
 
 alter table Users add sex ENUM('Male', 'Female') default 'Male';
+alter table Comments add title varchar(200);

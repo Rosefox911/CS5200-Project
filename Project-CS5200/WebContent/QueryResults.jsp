@@ -25,7 +25,7 @@ xmlhttp.onreadystatechange=function()
     document.getElementById("myDiv").innerHTML=xmlhttp.responseText;
     }
   }
-document.getElementById("likebutton").value  = "unlike";
+//document.getElementById("likebutton").value  = "unlike";
 xmlhttp.open("GET","processLike.jsp?id=" + itemid,true);
 xmlhttp.send();
 }
@@ -49,7 +49,7 @@ xmlhttp.onreadystatechange=function()
     document.getElementById("myDiv").innerHTML=xmlhttp.responseText;
     }
   }
-document.getElementById("unlikebutton").value  = "like";
+//document.getElementById("unlikebutton").value  = "like";
 xmlhttp.open("GET","processunLike.jsp?id=" + itemid,true);
 xmlhttp.send();
 }
@@ -108,24 +108,24 @@ xmlhttp.send();
 						if (likeDao.userLiked(userName, p.getItemID()) == null) {
 							%>
 							<tr>
-								<td><img src=<%=p.getGalleryURL()%>></td>
+								<td><a href="ProductDetails.jsp?id=<%= p.getItemID() %>"><img src=<%=p.getGalleryURL()%>></a></td>
 								<td><%=p.getTitle()%></td>
 								<td><%=p.getPrimaryCategoryName()%></td>
 								<td>$<%=p.getConvertedCurrentPrice()%></td>
 								<td><%=p.getTimeLeft()%></td>
-								<td><input id = "likebutton" type="button" name = "like" value = "like" onclick="captureLike(<%= p.getItemID() %>)"></td>
+								<td><input id = "likebutton" type="button" name = "like" value = "like/unlike" onclick="captureLike(<%= p.getItemID() %>)"></td>
 							</tr>
 							<%
 						}
 						else {
 							%>
 							<tr>
-								<td><img src=<%=p.getGalleryURL()%>></td>
+								<td><a href="ProductDetails.jsp?id=<%= p.getItemID() %>"><img src=<%=p.getGalleryURL()%>></a></td>
 								<td><%=p.getTitle()%></td>
 								<td><%=p.getPrimaryCategoryName()%></td>
 								<td>$<%=p.getConvertedCurrentPrice()%></td>
 								<td><%=p.getTimeLeft()%></td>
-								<td><input id = "unlikebutton" type="button" name = "like" value = "unlike" onclick="captureUnLike(<%= p.getItemID() %>)"></td>
+								<td><input id = "unlikebutton" type="button" name = "like" value = "like/unlike" onclick="captureUnLike(<%= p.getItemID() %>)"></td>
 							</tr>
 							<%
 						}

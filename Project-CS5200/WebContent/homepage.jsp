@@ -1,3 +1,4 @@
+<%@page import="classes.*"%>
 <%@ page language="java" contentType="text/html; charset=US-ASCII"
     pageEncoding="US-ASCII" import="api.*, classes.*, java.sql.*, java.util.*"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
@@ -83,6 +84,28 @@
 		</tr>
 		<%} %>
 		</div>
+		
+		
+				<div class="recentcomments">
+		<h1><%= user.getFirstname()%>'s Recent Comments</h1>
+		<% CommentDAO c = CommentDAO.getInstance();
+		String currentuser = user.getUsername();
+		List<Comment> recentComments = c.recentComments(currentuser);
+		
+		%>
+		
+		<%
+			for (Comment comment: recentComments) {
+		%>
+		
+		<tr>
+		<td><%=comment.getUser().getFirstname() %> Commented <%=comment.getContent()%> on <%= comment.getTitle()%></td>
+		</br>
+		</tr>
+		<%} %>
+		</div>
+		
+
 		</div>
 </body>
 </html>

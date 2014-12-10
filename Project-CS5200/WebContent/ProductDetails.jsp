@@ -8,7 +8,7 @@
 <title>Insert title here</title>
 </head>
 <script>
-function captureLike(itemid)
+function captureComment(itemid, title)
 {
 var xmlhttp;
 if (window.XMLHttpRequest)
@@ -27,7 +27,7 @@ xmlhttp.onreadystatechange=function()
     }
   }
 var comment = document.getElementById("comment").value;
-xmlhttp.open("GET","processComment.jsp?id=" + itemid + "&comment=" + comment,true);
+xmlhttp.open("GET","processComment.jsp?id=" + itemid + "&title=" + title + "&comment=" + comment,true);
 xmlhttp.send();
 }
 </script>
@@ -72,13 +72,14 @@ Double ConvertedCurrentPrice = (Double) ConvertedCurrentPriceList.get("Value");
 <h2>Price: <%= ConvertedCurrentPrice %></h2>
 
 <input type=text id="comment" name="comment"> 
-<input type="button" name = "like" value = "like" onclick="captureLike(<%= ItemID %>)">
+<input type="button" name = "like" value = "comment" onclick="captureComment('<%= ItemID %>', '<%= Title %>')">
 
 
 		<div class="recentcomments">
 		<h1>Recent Comments</h1>
 		<% CommentDAO c = CommentDAO.getInstance();
-		System.out.println(ItemID);
+		//System.out.println(ItemID);
+		//System.out.println(Title);
 		List<Comment> recentComments = c.recentCommentsForProduct(ItemID);
 		%>
 		
