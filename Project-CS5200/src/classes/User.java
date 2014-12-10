@@ -220,9 +220,7 @@ public class User implements Serializable {
 	}
 	
 	public User(String username, String avatar, String bio, String email,
-			String firstname, String lastname, String password, String sex,
-			List<Comment> comments, List<Follow> follows1,
-			List<Follow> follows2, List<Like> likes) {
+			String firstname, String lastname, String password, String sex) {
 		super();
 		this.username = username;
 		this.avatar = avatar;
@@ -232,10 +230,6 @@ public class User implements Serializable {
 		this.lastname = lastname;
 		this.password = password;
 		this.sex = sex;
-		this.comments = comments;
-		this.follows1 = follows1;
-		this.follows2 = follows2;
-		this.likes = likes;
 	}
 
 }
