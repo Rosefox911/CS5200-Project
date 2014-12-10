@@ -7,6 +7,30 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Insert title here</title>
 </head>
+<script>
+function captureLike(itemid)
+{
+var xmlhttp;
+if (window.XMLHttpRequest)
+  {// code for IE7+, Firefox, Chrome, Opera, Safari
+  xmlhttp=new XMLHttpRequest();
+  }
+else
+  {// code for IE6, IE5
+  xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
+  }
+xmlhttp.onreadystatechange=function()
+  {
+  if (xmlhttp.readyState==4 && xmlhttp.status==200)
+    {
+    document.getElementById("myDiv").innerHTML=xmlhttp.responseText;
+    }
+  }
+var comment = document.getElementById("comment").value;
+xmlhttp.open("GET","processComment.jsp?id=" + itemid + "&comment=" + comment,true);
+xmlhttp.send();
+}
+</script>
 <body>
 <%
 String id = request.getParameter("id");
@@ -47,5 +71,24 @@ Double ConvertedCurrentPrice = (Double) ConvertedCurrentPriceList.get("Value");
 <h2>Picture: <img src = "<%=GalleryURL %>"></h2>
 <h2>Price: <%= ConvertedCurrentPrice %></h2>
 
+<input type=text id="comment" name="comment"> 
+<input type="button" name = "like" value = "like" onclick="captureLike(<%= ItemID %>)">
+
+
+		<div class="recentfollows">
+		<h1>Recent Comments</h1>
+		<% CommentDAO c = CommentDAO.getInstance();
+		List<Comment> recentComments = c.recentCommentsForProduct(ItemID);
+		%>
+		
+		<%
+			for (Comment comment: recentComments) {
+		%>
+		
+		<tr>
+		<td><%=comment.getUser().getFirstname() %> Commented <%= comment.getContent()%></td>
+		</tr>
+		<%} %>
+		</div>
 </body>
 </html>

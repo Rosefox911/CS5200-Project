@@ -28,14 +28,15 @@ body {
                     }
                 }
             }
-            if (userName == null)
-                response.sendRedirect("login.html");
             
             String targetUser = request.getParameter("targetUser");
-            System.out.println(targetUser);
+           // System.out.println(targetUser);
             User target = dao.findUser(targetUser);
             FollowDAO followDAO = FollowDAO.getInstance();
             Follow f = followDAO.findFollow(userName, targetUser);
+            if (userName == null || dao.findUser(targetUser) == null) {
+                response.sendRedirect("homepage.jsp");
+            }
             if (f == null) {
             	%> 
             	<form method="post" action="FollowUserServlet" name="inputpage">
@@ -49,13 +50,18 @@ body {
             	<INPUT TYPE="submit" Value="unFollow" NAME="submit" title="unFollow">
             	<%
             }
+            
+            if (userName != null && dao.findUser(targetUser) != null) {
+                %> <div class="avatar">
+    	        <img src=<%= target.getAvatar()%>>
+    	        <p> Name </p> <%= target.getFirstname() %> <%= target.getLastname() %>
+    	        <p>Biography: </p> <%= target.getBio() %>
+    	        <p></p>
+            </div>
+            <%
+            }
             %>
-        <div class="avatar">
-	        <img src=<%= target.getAvatar()%>>
-	        <p> Name </p> <%= target.getFirstname()%> <%= target.getLastname() %>
-	        <p>Biography: </p> <%= target.getBio() %>
-	        <p></p>
-        </div>
+  
         
         
 

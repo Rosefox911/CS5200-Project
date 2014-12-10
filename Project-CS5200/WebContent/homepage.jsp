@@ -50,6 +50,9 @@
     </div>
          
     </div>
+    <div class="activity">
+    <div class="recentlikes">
+    <h1><%= user.getFirstname()%>'s Recent Likes</h1>
       <%LikeDAO l = LikeDAO.getInstance();
     List<Like> recentLikes = l.recentLikes(user.getUsername());
     %>
@@ -57,14 +60,18 @@
     <%
 			for (Like like: recentLikes) {
 		%>
-		
 		<tr>
-		<td><%=like.getUser().getFirstname() %> likes item<%=like.getId().getSku()%></td>
+		<td>liked item number <%=like.getId().getSku()%></td>
+		</br>
 		</tr>
 		<%} %>
 		
+		</div>
+		
+		<div class="recentfollows">
+		<h1><%= user.getFirstname()%>'s Recent Follows</h1>
 		<% FollowDAO f = FollowDAO.getInstance();
-		List<Follow> recentFollows = l.recentFollows(user.getUsername());
+		List<Follow> recentFollows = f.recentFollows(user.getUsername());
 		%>
 		
 		<%
@@ -72,8 +79,10 @@
 		%>
 		
 		<tr>
-		<td><%=follow.getUser1().getFirstname() %> Follows item<%=follow.getUser2().getFirstName()%></td>
+		<td><%=follow.getUser1().getFirstname() %> Followed <%=follow.getUser2().getFirstname()%></td>
 		</tr>
 		<%} %>
+		</div>
+		</div>
 </body>
 </html>
