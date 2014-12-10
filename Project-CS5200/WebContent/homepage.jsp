@@ -37,10 +37,10 @@ body {
 	        <p>Biography: </p> <%= user.getBio() %>
 	        <p></p>
         </div>
-        <div style = "position:fixed; top: 20px; right: 20px; width: 100px; height: 200ps" id="container">
+        <div style = "position:fixed; top: 20px; right: 90px; width: 100px; height: 200ps" id="container">
         <form action="./searchUser.jsp" method="post">
             <br> <br> Search others by Username: <input type="text" name="targetUser">
-            <br> <br> <input type="submit" value="usrname">
+            <br> <br> <input type="submit" value="search">
         </form>
     </div>
         
