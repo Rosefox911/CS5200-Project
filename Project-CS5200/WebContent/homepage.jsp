@@ -50,5 +50,17 @@
     </div>
          
     </div>
+      <%LikeDAO l = LikeDAO.getInstance();
+    List<Like> recentLikes = l.recentLikes(user.getUsername());
+    %>
+    
+    <%
+			for (Like like: recentLikes) {
+		%>
+		
+		<tr>
+		<td><%=like.getUser().getFirstname() %> likes item<%=like.getId().getSku()%></td>
+		</tr>
+		<%} %>
 </body>
 </html>
