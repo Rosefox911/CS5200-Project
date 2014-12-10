@@ -9,7 +9,21 @@
 </head>
 <body>
 <%String id = request.getParameter("id");
-Like like = new Like();
+
+UserDAO dao = UserDAO.getInstance();
+User curUser = new User();
+String userName = null;
+Cookie[] cookies = request.getCookies();
+if (cookies != null) {
+    for (Cookie cookie : cookies) {
+        if (cookie.getName().equals("User")) {
+            userName = cookie.getValue();
+        	curUser = dao.findUser(userName);
+        	break;
+        }
+    }
+}
+LikeDAO.getInstance().createLike(userName, id); // create a new like
 %>
 
 <p><%=id %></p>
