@@ -31,6 +31,8 @@ public class User implements Serializable {
 	private String lastname;
 
 	private String password;
+	
+	private String sex;
 
 	//bi-directional many-to-one association to Comment
 	@OneToMany(mappedBy="user")
@@ -106,6 +108,14 @@ public class User implements Serializable {
 
 	public void setPassword(String password) {
 		this.password = password;
+	}
+	
+	public String getSex() {
+		return sex;
+	}
+
+	public void setSex(String sex) {
+		this.sex = sex;
 	}
 
 	public List<Comment> getComments() {
@@ -195,6 +205,7 @@ public class User implements Serializable {
 
 		return like;
 	}
+	
 
 	public User(String username, String avatar, String bio, String email,
 			String firstname, String lastname, String password) {
@@ -208,5 +219,23 @@ public class User implements Serializable {
 		this.password = password;
 	}
 	
+	public User(String username, String avatar, String bio, String email,
+			String firstname, String lastname, String password, String sex,
+			List<Comment> comments, List<Follow> follows1,
+			List<Follow> follows2, List<Like> likes) {
+		super();
+		this.username = username;
+		this.avatar = avatar;
+		this.bio = bio;
+		this.email = email;
+		this.firstname = firstname;
+		this.lastname = lastname;
+		this.password = password;
+		this.sex = sex;
+		this.comments = comments;
+		this.follows1 = follows1;
+		this.follows2 = follows2;
+		this.likes = likes;
+	}
 
 }
