@@ -54,6 +54,11 @@ public class FollowDAO {
 		}
 	}
 	
+	public Follow findFollow(String follower, String followed) {
+		
+		return em.find(Follow.class, new FollowPK(follower, followed));
+	}
+	
 	@SuppressWarnings("unchecked")
 	public List<Follow> recentFollows(String username) {
 		List<Follow> follows = new ArrayList<Follow>();

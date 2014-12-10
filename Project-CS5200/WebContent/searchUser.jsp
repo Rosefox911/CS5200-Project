@@ -16,33 +16,48 @@ body {
     <div class="container">
         <%
        		UserDAO dao = UserDAO.getInstance();
-        	User user = new User();
+        	User curUser = new User();
             String userName = null;
             Cookie[] cookies = request.getCookies();
             if (cookies != null) {
                 for (Cookie cookie : cookies) {
                     if (cookie.getName().equals("User")) {
                         userName = cookie.getValue();
-                    	user = dao.findUser(userName);
+                    	curUser = dao.findUser(userName);
                     	break;
                     }
                 }
             }
             if (userName == null)
                 response.sendRedirect("login.html");
+            
+            String targetUser = request.getParameter("targetUser");
+            System.out.println(targetUser);
+            User target = dao.findUser(targetUser);
+            FollowDAO followDAO = FollowDAO.getInstance();
+            Follow f = followDAO.findFollow(userName, targetUser);
+            if (f == null) {
+            	%> 
+            	<form method="post" action="FollowUserServlet" name="inputpage">
+            	<input name="submit" type="hidden" value=<%=targetUser%>/>
+            	<INPUT TYPE="submit" Value="Follow" NAME="submit" title="follow">
+            	<%
+            } else {
+            	%> 
+            	<form method="post" action="FollowUserServlet" name="inputpage">
+            	<input name="submit" type="hidden" value=<%=targetUser%>/>
+            	<INPUT TYPE="submit" Value="unFollow" NAME="submit" title="unFollow">
+            	<%
+            }
+            %>
         %>
         <div class="avatar">
-	        <img src=<%= user.getAvatar()%>>
-	        <p> Name</p> <%= user.getFirstname()%> <%= user.getLastname() %>
-	        <p>Biography: </p> <%= user.getBio() %>
+	        <img src=<%= target.getAvatar()%>>
+	        <p> Name </p> <%= target.getFirstname()%> <%= target.getLastname() %>
+	        <p>Biography: </p> <%= target.getBio() %>
 	        <p></p>
         </div>
-        <div style = "position:fixed; top: 20px; right: 20px; width: 100px; height: 200ps" id="container">
-        <form action="./searchUser.jsp" method="post">
-            <br> <br> Search others by Username: <input type="text" name="targetUser">
-            <br> <br> <input type="submit" value="usrname">
-        </form>
-    </div>
+        
         
 
    <!-- <h3> Hi <%=userName%>, Login successful. </h3> <br> -->     
