@@ -25,9 +25,7 @@ public class UserWebService {
 	public User getUserbyUsername(@PathParam("username") String username) {
 		User user = new User();
 		user = dao.findUser(username);
-		System.out.println(username);
-		System.out.println(user.getBio());
-		return dao.findUser(username);
+		return user;
 	}
 
 }

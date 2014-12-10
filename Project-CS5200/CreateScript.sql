@@ -35,3 +35,6 @@ sku VARCHAR(15) NOT NULL,
 date TIMESTAMP NOT NULL,
 content VARCHAR(400)
 );
+
+
+alter table Users add sex ENUM('Male', 'Female') default 'Male';
