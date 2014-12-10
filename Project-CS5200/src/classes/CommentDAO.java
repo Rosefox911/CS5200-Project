@@ -44,7 +44,7 @@ public class CommentDAO {
 		Integer limiter = 5;
 		
 		em.getTransaction().begin();
-		Query query = em.createQuery("SELECT c FROM Comment c WHERE c.commenter=:username ORDER BY c.date DESC").setMaxResults(limiter);
+		Query query = em.createQuery("SELECT c FROM Comment c WHERE c.user.username=:username ORDER BY c.date DESC").setMaxResults(limiter);
 		query.setParameter("username", username);
 		try {
 			comments = (List<Comment>)query.getResultList();
@@ -58,7 +58,7 @@ public class CommentDAO {
 	public static void main(String[] args) {
 		CommentDAO dao = new CommentDAO();
 	
-		dao.createComment("username1", "123456", "test content");
+		dao.createComment("username1", "123456", "test content 2");
 		List<Comment> listOfResult = dao.recentComments("username1");
 		for (Comment c : listOfResult) {
 			System.out.println(c.getSku());
