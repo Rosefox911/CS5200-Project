@@ -62,5 +62,18 @@
 		<td><%=like.getUser().getFirstname() %> likes item<%=like.getId().getSku()%></td>
 		</tr>
 		<%} %>
+		
+		<% FollowDAO f = FollowDAO.getInstance();
+		List<Follow> recentFollows = l.recentFollows(user.getUsername());
+		%>
+		
+		<%
+			for (Follow follow: recentFollows) {
+		%>
+		
+		<tr>
+		<td><%=follow.getUser1().getFirstname() %> Follows item<%=follow.getUser2().getFirstName()%></td>
+		</tr>
+		<%} %>
 </body>
 </html>
