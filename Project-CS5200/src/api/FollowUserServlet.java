@@ -34,8 +34,8 @@ public class FollowUserServlet extends HttpServlet {
     	UserDAO dao = UserDAO.getInstance();
     	
         // get request parameters for userID and password
-        String targetUser = request.getParameter("submit");
- 
+        String targetUser = request.getParameter("hidden");
+        targetUser = targetUser.replace("/", "");
         String userName = null;
         User curUser = null;
         Cookie[] cookies = request.getCookies();
