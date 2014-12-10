@@ -29,9 +29,11 @@
     <div class="container">
         <div class="avatar">
 	        <img src=<%= user.getAvatar()%>>
-	        <p> Name</p> <%= user.getFirstname()%> <%= user.getLastname() %>
-	        <p>Biography: </p> <%= user.getBio() %>
-	        <p></p>
+	        <p> </p> <%= user.getFirstname()%> <%= user.getLastname() %>
+	        <p> </p> <%= user.getBio() %>
+	        <form action="LogOutServlet" method="post">
+            <input type="submit" value="Logout">
+        </form>
         </div>
         
         
@@ -46,13 +48,7 @@
             <br> <br> <input type="Submit" name ="btn" value="Search Products">
         </form>
     </div>
-        
-
-   <!-- <h3> Hi <%=userName%>, Login successful. </h3> <br> -->     
- 
-        <form action="LogOutServlet" method="post">
-            <input type="submit" value="Logout">
-        </form>
+         
     </div>
 </body>
 </html>
